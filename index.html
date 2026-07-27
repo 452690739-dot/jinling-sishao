@@ -1,0 +1,1542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逃课之王</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #FF6B35;
+    --primary-dark: #E55A2B;
+    --secondary-color: #F7C59F;
+    --background-color: #1A1A2E;
+    --card-bg: #16213E;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A0A0A0;
+    --border-color: #0F3460;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --accent-color: #E94560;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--background-color);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 导航栏 */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(22, 33, 62, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hero 区域 */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(233, 69, 96, 0.1) 50%, rgba(15, 52, 96, 0.5) 100%);
+}
+
+.hero-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-color), #FFD700, var(--accent-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 40px rgba(255, 107, 53, 0.3);
+    animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { filter: brightness(1); }
+    to { filter: brightness(1.2); }
+}
+
+.hero-content .subtitle {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.hero-content .description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 3rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn {
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(255, 107, 53, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* 通用区域样式 */
+section {
+    padding: 6rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.section-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 2px;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+}
+
+/* 人物介绍 */
+.characters {
+    background-color: var(--background-color);
+}
+
+.characters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.character-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.character-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
+}
+
+.character-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.character-card:hover::before {
+    opacity: 1;
+}
+
+.character-image {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.character-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.character-card:hover .character-image img {
+    transform: scale(1.1);
+}
+
+.character-rank {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(255, 107, 53, 0.9);
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border-radius: 20px;
+    letter-spacing: 1px;
+}
+
+.character-rank.boss {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #1A1A2E;
+}
+
+.character-info {
+    padding: 1.5rem;
+}
+
+.character-info h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.character-info .character-name {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.character-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.character-stats {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-around;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item .stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-item .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+/* 逃课事迹 */
+.stories {
+    background-color: var(--card-bg);
+}
+
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.story-card {
+    background-color: var(--background-color);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateX(10px);
+    border-color: var(--accent-color);
+}
+
+.story-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.story-card h3 i {
+    color: var(--primary-color);
+}
+
+.story-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* 团队荣誉 */
+.honors {
+    background-color: var(--background-color);
+}
+
+.honors-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.honor-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+
+.honor-card:hover {
+    transform: translateY(-5px);
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(233, 69, 96, 0.1));
+}
+
+.honor-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.honor-card h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.honor-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 名言 */
+.quotes {
+    background: linear-gradient(135deg, var(--card-bg) 0%, var(--background-color) 100%);
+}
+
+.quotes-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quote-card {
+    background-color: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    position: relative;
+}
+
+.quote-card i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.quote-card p {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    font-style: italic;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+}
+
+.quote-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* 青春旅行 */
+.travel {
+    background-color: var(--background-color);
+}
+
+.travel-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.travel-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+}
+
+.travel-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
+}
+
+.travel-image {
+    height: 220px;
+    overflow: hidden;
+}
+
+.travel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.travel-card:hover .travel-image img {
+    transform: scale(1.1);
+}
+
+.travel-info {
+    padding: 1.5rem;
+}
+
+.travel-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.travel-info h3 i {
+    color: var(--primary-color);
+}
+
+.travel-info p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 台球传奇 */
+.billiards {
+    background-color: var(--card-bg);
+}
+
+.billiards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.billiards-card {
+    background-color: var(--background-color);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.4s ease;
+    border: 1px solid var(--border-color);
+}
+
+.billiards-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary-color);
+}
+
+.billiards-image {
+    height: 220px;
+    overflow: hidden;
+}
+
+.billiards-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.billiards-card:hover .billiards-image img {
+    transform: scale(1.1);
+}
+
+.billiards-info {
+    padding: 1.5rem;
+}
+
+.billiards-info h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.billiards-info h3 i {
+    color: var(--primary-color);
+}
+
+.billiards-info p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 未来展望 */
+.future {
+    background: linear-gradient(135deg, var(--background-color) 0%, var(--card-bg) 50%, var(--background-color) 100%);
+    padding: 8rem 0;
+}
+
+.future-message {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem;
+    padding: 3rem;
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: 16px;
+}
+
+.future-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.future-message h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+.future-message p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.future-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.future-card {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.future-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(233, 69, 96, 0.1));
+}
+
+.future-card i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.future-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+}
+
+.future-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.future-oath {
+    margin-bottom: 4rem;
+}
+
+.oath-content {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(233, 69, 96, 0.2));
+    border: 2px solid var(--primary-color);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.oath-content h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+}
+
+.oath-content p {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    line-height: 2;
+    font-style: italic;
+}
+
+.oath-line {
+    display: block;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.oath-line:nth-child(1) { animation-delay: 0.2s; }
+.oath-line:nth-child(2) { animation-delay: 0.4s; }
+.oath-line:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.oath-signatures {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: 2rem;
+}
+
+.signature {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    position: relative;
+}
+
+.signature::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+}
+
+.future-cheers {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.future-cheers img {
+    max-width: 100%;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cheers-content h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.cheers-content p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+/* 页脚 */
+.footer {
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 3rem 0;
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-logo i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.footer-logo span {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.footer-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.footer-copyright {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 992px) {
+    .characters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .honors-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--card-bg);
+        flex-direction: column;
+        padding: 1rem 20px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .stories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .travel-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .billiards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .future-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .characters-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .future-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .honors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .quote-card {
+        padding: 2rem 1rem;
+    }
+
+    .footer .container {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* 滚动动画 */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.scroll-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-school"></i>
+                <h1>金陵四少</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#characters">天才少年</a></li>
+                <li><a href="#stories">金陵初识</a></li>
+                <li><a href="#billiards">台球传奇</a></li>
+                <li><a href="#travel">青春旅行</a></li>
+                <li><a href="#honors">团队荣誉</a></li>
+                <li><a href="#future">未来展望</a></li>
+            </ul>
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero 区域 -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>🎓 金陵风云</h2>
+                <h1>天才少年</h1>
+                <p class="subtitle">2024年盛夏，命运让他们相遇在金陵</p>
+                <p class="description">
+                    四位来自祖国各地的天才少年，怀揣梦想与激情，相聚于金陵科技学院。
+                    他们各有所长，性格迥异，却因缘分走到一起，开启了一段传奇的大学之旅。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#characters" class="btn btn-primary">
+                        <i class="fas fa-users"></i> 认识团队
+                    </a>
+                    <a href="#stories" class="btn btn-secondary">
+                        <i class="fas fa-book-open"></i> 传奇事迹
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section id="characters" class="characters">
+        <div class="container">
+            <div class="section-header">
+                <h2>天才少年</h2>
+                <p>四位来自祖国各地的英才，相聚金陵科技学院</p>
+            </div>
+            <div class="characters-grid">
+                <!-- 老大 - 陈志强 -->
+                <div class="character-card scroll-reveal">
+                    <div class="character-image">
+                        <img src="images/leader.jpg" alt="陈志强">
+                        <span class="character-rank boss">老大</span>
+                    </div>
+                    <div class="character-info">
+                        <h3>陈志强</h3>
+                        <p class="character-name">团队领袖 | 台球大师</p>
+                        <p class="character-description">
+                            来自江苏的江南才子，性格沉稳内敛，却有着超乎常人的领导能力。作为团队的灵魂人物，他总是在关键时刻做出最明智的决策。他不仅学业出众，更是一位深藏不露的台球高手，精准的走位和巧妙的杆法令人叹为观止。后来，他收了钱宇阳和雷豪为徒，倾囊相授，成就了一段师徒佳话。
+                        </p>
+                        <div class="character-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">江苏</div>
+                                <div class="stat-label">籍贯</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">计算机</div>
+                                <div class="stat-label">专业</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 老二 - 雷豪 -->
+                <div class="character-card scroll-reveal">
+                    <div class="character-image">
+                        <img src="images/fighter.jpg" alt="雷豪">
+                        <span class="character-rank">老二</span>
+                    </div>
+                    <div class="character-info">
+                        <h3>雷豪</h3>
+                        <p class="character-name">行动先锋 | 台球徒弟</p>
+                        <p class="character-description">
+                            来自山东的热血少年，身材魁梧，性格豪爽直率。他有着惊人的运动天赋，无论是篮球还是跑步，都能轻松驾驭。被老大陈志强收为台球徒弟后，他凭借出色的身体素质和不懈的努力，从一个台球小白迅速成长为校园台球界的新星，成为师父最骄傲的弟子之一。
+                        </p>
+                        <div class="character-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">山东</div>
+                                <div class="stat-label">籍贯</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">体育</div>
+                                <div class="stat-label">专业</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 老二 - 钱宇阳 -->
+                <div class="character-card scroll-reveal">
+                    <div class="character-image">
+                        <img src="images/scholar.jpg" alt="钱宇阳">
+                        <span class="character-rank">老二</span>
+                    </div>
+                    <div class="character-info">
+                        <h3>钱宇阳</h3>
+                        <p class="character-name">智慧大脑 | 台球徒弟</p>
+                        <p class="character-description">
+                            来自四川的学霸，戴着一副眼镜，看起来文质彬彬，却拥有超强的记忆力和数据分析能力。他是团队的智囊团，任何难题在他面前都能迎刃而解。被陈志强收为台球徒弟后，他将数学思维运用到台球中，精确计算角度和力度，进步神速，成为独一无二的智慧型台球手。
+                        </p>
+                        <div class="character-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">四川</div>
+                                <div class="stat-label">籍贯</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">数学</div>
+                                <div class="stat-label">专业</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 老二 - 季云航 -->
+                <div class="character-card scroll-reveal">
+                    <div class="character-image">
+                        <img src="images/fashion.jpg" alt="季云航">
+                        <span class="character-rank">老二</span>
+                    </div>
+                    <div class="character-info">
+                        <h3>季云航</h3>
+                        <p class="character-name">全能战士 | 健身达人</p>
+                        <p class="character-description">
+                            来自上海的时尚达人，穿着潮流，气质出众。他不仅拥有健硕的身材，更有敏锐的时尚嗅觉，是团队的颜值担当。作为健身房的常客，他的体能在团队中堪称一绝，无论是运动还是学习，他都追求完美。他是团队中最可靠的守护者，无论何时都能挺身而出。
+                        </p>
+                        <div class="character-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">上海</div>
+                                <div class="stat-label">籍贯</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">设计</div>
+                                <div class="stat-label">专业</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 逃课事迹 -->
+    <section id="stories" class="stories">
+        <div class="container">
+            <div class="section-header">
+                <h2>金陵初识</h2>
+                <p>2024年盛夏，命运让他们相遇</p>
+            </div>
+            <div class="stories-grid">
+                <div class="story-card scroll-reveal">
+                    <h3><i class="fas fa-map-marker-alt"></i> 跨越千里的相遇</h3>
+                    <p>2024年的夏天，命运的齿轮开始转动。四个年轻人，分别从江苏、山东、四川和上海出发，跨越千山万水，相聚于金陵科技学院。他们带着各自的梦想、才华和对未来的憧憬，在这座古老而现代的城市，开始了一段注定不平凡的旅程。</p>
+                </div>
+                <div class="story-card scroll-reveal">
+                    <h3><i class="fas fa-door-open"></i> 宿舍里的初见</h3>
+                    <p>开学第一天，宿舍的门被轻轻推开。陈志强第一个到达，整理着行李，带着江南才子特有的儒雅气质。接着是雷豪，身材魁梧，嗓门洪亮，一进门就打破了安静。钱宇阳戴着眼镜，斯斯文文地走进来，手里还捧着一本数学书。最后是季云航，穿着时尚，发型精致，像走秀一样出现在门口。那一刻，四种截然不同的气质在小小的宿舍里碰撞，奇妙的缘分就此开始。</p>
+                </div>
+                <div class="story-card scroll-reveal">
+                    <h3><i class="fas fa-book-open"></i> 课堂上的缘分</h3>
+                    <p>第一堂课，他们意外地坐在了一起。陈志强认真地做着笔记，雷豪偷偷拿出手机看球赛，钱宇阳轻松地解答着老师抛出的难题，季云航则在笔记本上画着服装设计图。虽然性格迥异，但命运让他们的大学生活紧紧交织在一起。课后，他们聊起天来，发现彼此竟是如此投缘。</p>
+                </div>
+                <div class="story-card scroll-reveal">
+                    <h3><i class="fas fa-heart"></i> 兄弟情的开始</h3>
+                    <p>从陌生到熟悉，从同学到兄弟，只用了短短几天。他们一起熬夜复习，一起参加社团活动，一起分享快乐和烦恼。陈志强的沉稳、雷豪的豪爽、钱宇阳的智慧、季云航的热情，四种性格互补，让他们成为了最默契的团队。2024年的盛夏，注定成为他们人生中最难忘的起点。</p>
+                </div>
+                <div class="story-card scroll-reveal">
+                    <h3><i class="fas fa-billiards"></i> 台球厅的拜师</h3>
+                    <p>那天，钱宇阳和雷豪偶然路过学校附近的台球厅，看到一个熟悉的身影正在击球。走近一看，竟然是老大陈志强！只见他精准的走位、巧妙的杆法，每一次击球都像是经过精密计算。两人看得目瞪口呆，当场决定拜师学艺。从此，陈志强正式收了这两位徒弟，开始了一段传奇的师徒佳话。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 青春旅行 -->
+    <section id="travel" class="travel">
+        <div class="container">
+            <div class="section-header">
+                <h2>青春旅行</h2>
+                <p>相识之后，一起踏上旅途</p>
+            </div>
+            <div class="travel-grid">
+                <div class="travel-card scroll-reveal">
+                    <div class="travel-image">
+                        <img src="images/beach-walk.jpg" alt="海边旅行">
+                    </div>
+                    <div class="travel-info">
+                        <h3><i class="fas fa-anchor"></i> 海边的足迹</h3>
+                        <p>
+                            国庆假期，四人相约前往江苏海边。清晨的沙滩上，他们光着脚奔跑，海浪轻轻拍打着脚踝。雷豪兴奋地在沙滩上写下"江苏"两个大字，钱宇阳掏出手机记录下这美好的瞬间。陈志强静静地站在海边，看着远处的大海，似乎在思考着什么。季云航则忙着拍照，想要把每一个精彩的瞬间都定格下来。
+                        </p>
+                    </div>
+                </div>
+                <div class="travel-card scroll-reveal">
+                    <div class="travel-image">
+                        <img src="images/seafood.jpg" alt="聚餐">
+                    </div>
+                    <div class="travel-info">
+                        <h3><i class="fas fa-utensils"></i> 餐桌上的故事</h3>
+                        <p>
+                            旅行的意义，除了风景，还有美食。他们来到当地最有名的海鲜餐厅，点了满满一桌菜肴。清蒸鱼鲜嫩可口，蒜蓉虾香气扑鼻，还有各种当地特色小吃。在餐桌上，他们聊起各自的家乡，分享着童年的趣事，笑声此起彼伏。每一道菜，都承载着他们共同的回忆，每一口，都是友情的味道。
+                        </p>
+                    </div>
+                </div>
+                <div class="travel-card scroll-reveal">
+                    <div class="travel-image">
+                        <img src="images/leader.jpg" alt="海边漫步">
+                    </div>
+                    <div class="travel-info">
+                        <h3><i class="fas fa-sun"></i> 夕阳下的约定</h3>
+                        <p>
+                            夕阳西下，金色的余晖洒在海面上，波光粼粼。四人并肩漫步在沙滩上，影子被拉得很长很长。那一刻，时间仿佛静止了。陈志强率先打破沉默，说："兄弟们，无论未来我们走到哪里，这份情谊永远不变。"雷豪拍着胸脯保证："那必须的！"钱宇阳推了推眼镜，认真地点了点头。季云航则举起手机，记录下了这个美好的瞬间。
+                        </p>
+                    </div>
+                </div>
+                <div class="travel-card scroll-reveal">
+                    <div class="travel-image">
+                        <img src="images/group.jpg" alt="合影">
+                    </div>
+                    <div class="travel-info">
+                        <h3><i class="fas fa-camera"></i> 定格的青春</h3>
+                        <p>
+                            旅行的最后一天，他们在海边拍下了一张珍贵的合影。照片中，四个年轻人笑容灿烂，阳光洒在他们的脸上，充满青春的活力。陈志强站在中间，双手搭在雷豪和钱宇阳的肩膀上，季云航则调皮地比着剪刀手。这张照片，将成为他们一辈子的回忆，每当看到它，就会想起那段无忧无虑的青春时光。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 台球传奇 -->
+    <section id="billiards" class="billiards">
+        <div class="container">
+            <div class="section-header">
+                <h2>台球传奇</h2>
+                <p>师父与徒弟的台球之路</p>
+            </div>
+            <div class="billiards-grid">
+                <div class="billiards-card scroll-reveal">
+                    <div class="billiards-image">
+                        <img src="images/billiards.jpg" alt="台球厅">
+                    </div>
+                    <div class="billiards-info">
+                        <h3><i class="fas fa-bullseye"></i> 师父的传奇</h3>
+                        <p>
+                            那天下午，钱宇阳和雷豪偶然路过学校附近的台球厅，听到里面传来阵阵惊叹声。他们好奇地走进去，只见老大陈志强正独自打着台球。他的姿势优雅而精准，每一次出杆都像是经过精密计算，白球精准地击中目标球，完美入袋。两人看得目瞪口呆，当场决定拜师学艺。
+                        </p>
+                    </div>
+                </div>
+                <div class="billiards-card scroll-reveal">
+                    <div class="billiards-image">
+                        <img src="images/teaching.jpg" alt="教学">
+                    </div>
+                    <div class="billiards-info">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> 精心的传授</h3>
+                        <p>
+                            陈志强欣然收下了这两位徒弟。他从最基础的握杆姿势开始教起，耐心地纠正他们的动作。钱宇阳将数学思维运用到台球中，精确计算角度和反弹，进步神速；雷豪则凭借出色的身体素质，力量控制恰到好处。师徒三人在台球厅度过了无数个夜晚，汗水浸透了他们的衣衫，但他们从未放弃。
+                        </p>
+                    </div>
+                </div>
+                <div class="billiards-card scroll-reveal">
+                    <div class="billiards-image">
+                        <img src="images/billiards.jpg" alt="比赛">
+                    </div>
+                    <div class="billiards-info">
+                        <h3><i class="fas fa-trophy"></i> 称霸的时刻</h3>
+                        <p>
+                            在师父的悉心指导下，钱宇阳和雷豪的球技突飞猛进。他们代表金陵科技学院参加了校际台球比赛。小组赛轻松晋级，半决赛险胜对手，决赛面对最强劲的对手，他们沉着冷静，配合默契。最终，他们以微弱优势赢得冠军，成为校园里的台球传奇。颁奖台上，师徒三人紧紧拥抱在一起。
+                        </p>
+                    </div>
+                </div>
+                <div class="billiards-card scroll-reveal">
+                    <div class="billiards-image">
+                        <img src="images/teaching.jpg" alt="休闲">
+                    </div>
+                    <div class="billiards-info">
+                        <h3><i class="fas fa-smile"></i> 台球的情谊</h3>
+                        <p>
+                            台球不仅是一项运动，更是他们兄弟情谊的见证。每一次击球、每一次胜利、每一次失败，都让他们的关系更加紧密。无论是在球桌上还是生活中，他们都相互支持、相互鼓励。这份师徒情，这份兄弟情，将永远铭记在他们心中，成为大学时光中最珍贵的回忆。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队荣誉 -->
+    <section id="honors" class="honors">
+        <div class="container">
+            <div class="section-header">
+                <h2>团队荣誉</h2>
+                <p>大学征程中的辉煌成就</p>
+            </div>
+            <div class="honors-grid">
+                <div class="honor-card scroll-reveal">
+                    <i class="fas fa-trophy"></i>
+                    <h3>4人</h3>
+                    <p>来自4个省份</p>
+                </div>
+                <div class="honor-card scroll-reveal">
+                    <i class="fas fa-award"></i>
+                    <h3>4个专业</h3>
+                    <p>各有所长</p>
+                </div>
+                <div class="honor-card scroll-reveal">
+                    <i class="fas fa-star"></i>
+                    <h3>1个目标</h3>
+                    <p>共创未来</p>
+                </div>
+                <div class="honor-card scroll-reveal">
+                    <i class="fas fa-medal"></i>
+                    <h3>一辈子</h3>
+                    <p>兄弟情义</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 名言 -->
+    <section id="quotes" class="quotes">
+        <div class="container">
+            <div class="section-header">
+                <h2>经典语录</h2>
+                <p>那些让人难忘的话</p>
+            </div>
+            <div class="quotes-container">
+                <div class="quote-card scroll-reveal">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"2024年的盛夏，我们相聚金陵。从祖国各地而来，为了同一个梦想。这里不是终点，而是我们传奇的起点。"</p>
+                    <div class="quote-author">
+                        <i class="fas fa-user"></i>
+                        <span>—— 陈志强（老大）</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 未来展望 -->
+    <section id="future" class="future">
+        <div class="container">
+            <div class="section-header">
+                <h2>未来展望</h2>
+                <p>致我们剩余的大学时光</p>
+            </div>
+            <div class="future-content">
+                <div class="future-message scroll-reveal">
+                    <div class="future-icon">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <h3>致我们仅剩的两年青春</h3>
+                    <p>
+                        时光荏苒，转眼间我们已经在金陵科技学院度过了两年的时光。回望过去，那些一起上课的日子、一起打台球的夜晚、一起旅行的快乐时光，仿佛就在昨天。我们有欢笑，有汗水，有成功，也有遗憾，但这些都已经成为我们人生中最宝贵的回忆。
+                    </p>
+                    <p>
+                        在接下来的两年里，我们将面临更多的挑战：专业课程的深入、实习工作的压力、考研就业的抉择...但无论前方的道路是平坦还是坎坷，我们都要携手并肩，共同前行。因为我们是兄弟，是一辈子的兄弟。
+                    </p>
+                </div>
+
+                <div class="future-cards">
+                    <div class="future-card scroll-reveal">
+                        <i class="fas fa-heart"></i>
+                        <h3>兄弟情深</h3>
+                        <p>无论未来我们走到哪里，身在何方，这份兄弟情永远不会改变。我们是彼此最坚实的后盾，最温暖的港湾，最可靠的战友。</p>
+                    </div>
+                    <div class="future-card scroll-reveal">
+                        <i class="fas fa-rocket"></i>
+                        <h3>追逐梦想</h3>
+                        <p>每个人都有自己的梦想和目标，让我们互相鼓励，互相支持，一起飞向更高更远的天空。无论遇到什么困难，都不要放弃。</p>
+                    </div>
+                    <div class="future-card scroll-reveal">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>不负青春</h3>
+                        <p>大学时光短暂而珍贵，让我们珍惜每一分每一秒，不留遗憾，不负青春，不负自己。因为青春只有一次，错过了就再也回不来。</p>
+                    </div>
+                    <div class="future-card scroll-reveal">
+                        <i class="fas fa-globe"></i>
+                        <h3>共创未来</h3>
+                        <p>无论未来身在何方，我们都要保持联系，继续合作，一起创造属于我们的辉煌未来。我们的故事，才刚刚开始。</p>
+                    </div>
+                </div>
+
+                <div class="future-oath scroll-reveal">
+                    <div class="oath-content">
+                        <h3>兄弟誓言</h3>
+                        <p>
+                            <span class="oath-line">"从今往后，无论富贵贫穷，无论顺境逆境，我们都要相互扶持，相互鼓励。"</span>
+                            <br>
+                            <span class="oath-line">"无论身在何方，这份兄弟情永远铭记在心，永不磨灭。"</span>
+                            <br>
+                            <span class="oath-line">"愿我们的友谊天长地久，愿我们的未来灿烂辉煌！"</span>
+                            <br>
+                            <span class="oath-line">"干杯！为了我们的青春，为了我们的兄弟情！"</span>
+                        </p>
+                        <div class="oath-signatures">
+                            <span class="signature">陈志强</span>
+                            <span class="signature">雷豪</span>
+                            <span class="signature">钱宇阳</span>
+                            <span class="signature">季云航</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="future-cheers scroll-reveal">
+                    <img src="images/cheers.jpg" alt="干杯">
+                    <div class="cheers-content">
+                        <h3>干杯！为了我们的青春！</h3>
+                        <p>愿我们的友谊像这杯酒一样，越陈越香，永不褪色。愿我们的未来像这烧烤一样，红红火火，蒸蒸日上！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-school"></i>
+                <span>金陵四少</span>
+            </div>
+            <div class="footer-links">
+                <a href="#home">首页</a>
+                <a href="#characters">天才少年</a>
+                <a href="#stories">金陵初识</a>
+                <a href="#billiards">台球传奇</a>
+                <a href="#travel">青春旅行</a>
+                <a href="#honors">团队荣誉</a>
+                <a href="#future">未来展望</a>
+            </div>
+            <p class="footer-copyright">&copy; 2024 金陵科技学院 - 天才少年. 青春永不散场</p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 移动端菜单切换
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+
+    // 点击导航链接时关闭菜单
+    const navItems = document.querySelectorAll('.nav-links a');
+    navItems.forEach(item => {
+        item.addEventListener('click', function() {
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+    });
+
+    // 平滑滚动到锚点
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // 导航栏滚动效果
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.3)';
+        } else {
+            navbar.style.boxShadow = 'none';
+        }
+    });
+
+    // 滚动动画
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries, observer) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    revealElements.forEach(element => {
+        observer.observe(element);
+    });
+
+    // 打字机效果
+    const subtitle = document.querySelector('.subtitle');
+    if (subtitle) {
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 80);
+            }
+        }
+        
+        setTimeout(typeWriter, 500);
+    }
+});
+    </script>
+</body>
+</html>
